@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: qtos-base
+  main:
+    banner-mode: off
+
+server:
+  port: 9300
