@@ -12,7 +12,7 @@
 
 	<packaging>pom</packaging>
 
-	<url>https://git.nju.edu.cn/TZQ/qtos-base</url>
+	<url>https://git.nju.edu.cn/TZQ/qtos-demo</url>
 
 	<properties>
 		<java.version>21</java.version>
