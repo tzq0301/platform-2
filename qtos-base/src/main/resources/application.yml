@@ -8,3 +8,7 @@ spring:
 
 server:
   port: 9300
+
+qtos:
+  base:
+    install-script-candidates: install.sh,install.py

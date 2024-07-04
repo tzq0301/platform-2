@@ -3,6 +3,10 @@
     {
       "name": "qtos.base.deploy-dir",
       "type": "java.lang.String"
+    },
+    {
+      "name": "qtos.base.install-script-candidates",
+      "type": "java.lang.String"
     }
   ]
 }

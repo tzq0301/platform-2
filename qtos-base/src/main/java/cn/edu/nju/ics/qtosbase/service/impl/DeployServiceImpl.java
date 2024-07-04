@@ -15,6 +15,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,8 +23,12 @@ import java.util.UUID;
 public class DeployServiceImpl implements DeployService {
     private final String deployDir;
 
-    public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir) {
+    private final List<String> installScriptCandidates;
+
+    public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir,
+                             @Value("${qtos.base.install-script-candidates}") List<String> installScriptCandidates) {
         this.deployDir = deployDir;
+        this.installScriptCandidates = installScriptCandidates;
     }
 
     @Override
@@ -54,5 +59,26 @@ public class DeployServiceImpl implements DeployService {
         log.info("transport the archived file and unarchive it to: {}", taskPath.toAbsolutePath());
 
         return taskId;
+    }
+
+    @Override
+    public void install(@NonNull String taskId) throws IOException {
+        String taskPath = String.format("%s/%s", deployDir, taskId);
+        for (String candidate: installScriptCandidates) {
+            File installScript = new File(taskPath, candidate);
+            if (!installScript.exists()) {
+                continue;
+            }
+            log.info("install script: {}", installScript.getAbsolutePath());
+
+            int exitCode = Runtime.getRuntime().exec(new String[]{installScript.getAbsolutePath()}).exitValue();
+            if (exitCode == 0) {
+                log.info("install script success");
+                return;
+            }
+
+            log.info("install script failed with exit code {}, try next", exitCode);
+        }
+        throw new RuntimeException("execution of all install scripts failed");
     }
 }
