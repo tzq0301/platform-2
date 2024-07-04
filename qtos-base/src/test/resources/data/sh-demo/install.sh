@@ -1,2 +1,1 @@
-bash a/main.sh
-
+bash a/main.sh > log

@@ -14,5 +14,5 @@ public interface DeployService {
      */
     String transport(@NonNull InputStream archived) throws IOException;
 
-    void install(@NonNull String taskId) throws IOException;
+    void install(@NonNull String taskId) throws IOException, InterruptedException;
 }

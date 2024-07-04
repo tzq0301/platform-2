@@ -62,7 +62,7 @@ public class DeployServiceImpl implements DeployService {
     }
 
     @Override
-    public void install(@NonNull String taskId) throws IOException {
+    public void install(@NonNull String taskId) throws IOException, InterruptedException {
         String taskPath = String.format("%s/%s", deployDir, taskId);
         for (String candidate: installScriptCandidates) {
             File installScript = new File(taskPath, candidate);
@@ -71,7 +71,18 @@ public class DeployServiceImpl implements DeployService {
             }
             log.info("install script: {}", installScript.getAbsolutePath());
 
-            int exitCode = Runtime.getRuntime().exec(new String[]{installScript.getAbsolutePath()}).exitValue();
+            String[] command = new String[2];
+            if (candidate.endsWith(".sh")) {
+                command[0] = "bash";
+            } else if (candidate.endsWith(".py")) {
+                command[0] = "python3";
+            }
+            command[1] = installScript.getAbsolutePath();
+
+            ProcessBuilder pb = new ProcessBuilder(command);
+            pb.directory(new File(taskPath));
+
+            int exitCode = pb.start().waitFor();
             if (exitCode == 0) {
                 log.info("install script success");
                 return;
