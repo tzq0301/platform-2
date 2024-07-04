@@ -49,3 +49,5 @@ go.work
 *.prof
 vendor/
 *.out
+
+qtos-base/localdeploydir

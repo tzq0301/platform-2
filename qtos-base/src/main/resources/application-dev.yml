@@ -1,0 +1,3 @@
+qtos:
+  base:
+    deploy-dir: localdeploydir
