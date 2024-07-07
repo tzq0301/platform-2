@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/deploy")
@@ -18,14 +19,14 @@ public class DeployController {
     }
 
     @PostMapping("/upload")
-    public Map<?, ?> upload(@RequestParam("file") MultipartFile archived) throws IOException {
+    public String upload(@RequestParam("file") MultipartFile archived) throws IOException {
         InputStream inputStream = archived.getInputStream();
-        return Map.of("taskId", deployService.transport(inputStream));
+        return deployService.transport(inputStream);
     }
 
     @PostMapping("/install")
     public void install(@RequestBody Map<String, String> params) throws IOException, InterruptedException {
-        String taskId = params.get("taskId");
+        String taskId = Objects.requireNonNull(params.get("taskId"));
         deployService.install(taskId);
     }
 }

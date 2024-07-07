@@ -8,6 +8,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -50,6 +51,12 @@ public class DeployServiceImpl implements DeployService {
     @Override
     public void install(@NonNull String taskId) throws IOException, InterruptedException {
         String taskPath = String.format("%s/%s", deployDir, taskId);
+
+        if (!new File(taskPath).exists()) {
+            log.warn("taskPath: {} does not exist", taskPath);
+            throw new FileNotFoundException(taskPath);
+        }
+
         for (String candidate: installScriptCandidates) {
             File installScript = new File(taskPath, candidate);
             if (!installScript.exists()) {

@@ -1,5 +1,8 @@
 MVN = mvn
 
+dev-platform:
+	cd qtos-platform && $(MVN) spring-boot:test-run -Dspring-boot.run.profiles=dev
+
 build-platform:
 	cd qtos-platform && $(MVN) package
 

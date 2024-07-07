@@ -3,6 +3,12 @@ spring:
     name: qtos-platform
   main:
     banner-mode: off
+  profiles:
+    active: dev
 
 server:
   port: 9200
+
+qtos:
+  platform:
+    base-port: 9300
