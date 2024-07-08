@@ -1,3 +1,3 @@
 # QTOS
 
-![architecture](docs/img/architecture-v4.png)
+![architecture](docs/img/architecture-v5.png)
