@@ -17,7 +17,7 @@ cd $WORKDIR
 
 # ------------------------------------------------------------
 
-task_id=$(http --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=demo-1 dependentTaskIds= machineId=1 file@$TARFILE | yq ".taskId")
+task_id=$(http --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=demo-1 dependentTaskIds= machineId=1 file@$TARFILE | yq ".data.taskId")
 
 echo $task_id
 

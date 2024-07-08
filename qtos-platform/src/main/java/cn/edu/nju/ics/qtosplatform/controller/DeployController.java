@@ -1,15 +1,16 @@
 package cn.edu.nju.ics.qtosplatform.controller;
 
+import cn.edu.nju.ics.qtosplatform.controller.exception.InvalidArgumentsException;
 import cn.edu.nju.ics.qtosplatform.entity.model.InstallCommand;
 import cn.edu.nju.ics.qtosplatform.entity.model.InstallRequest;
 import cn.edu.nju.ics.qtosplatform.entity.model.UploadCommand;
 import cn.edu.nju.ics.qtosplatform.entity.model.UploadDTO;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/deploy")
@@ -32,7 +33,12 @@ public class DeployController {
 
     @PostMapping("/install")
     public void install(@RequestBody InstallRequest request) {
-        String taskId = Objects.requireNonNull(request.getTaskId());
+        String taskId = request.getTaskId();
+
+        if (!StringUtils.hasText(taskId)) {
+            throw new InvalidArgumentsException("taskId is empty");
+        }
+
         InstallCommand command = new InstallCommand(taskId);
         deployService.install(command);
     }
