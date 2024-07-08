@@ -1,6 +1,8 @@
 package cn.edu.nju.ics.qtosbase.service.impl;
 
-import cn.edu.nju.ics.qtosbase.infrastructure.FileStore;
+import cn.edu.nju.ics.qtosbase.infrastructure.file.FileStore;
+import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.IdGenerator;
+import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.impl.UuidGenerator;
 import cn.edu.nju.ics.qtosbase.service.DeployService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,17 +27,20 @@ public class DeployServiceImpl implements DeployService {
 
     private final FileStore fileStore;
 
+    private final IdGenerator<UUID> idGenerator;
+
     public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir,
                              @Value("${qtos.base.install-script-candidates}") List<String> installScriptCandidates,
                              FileStore fileStore) {
         this.deployDir = deployDir;
         this.installScriptCandidates = installScriptCandidates;
         this.fileStore = fileStore;
+        this.idGenerator = new UuidGenerator(UuidGenerator.Version.V7);
     }
 
     @Override
     public String transport(@NonNull InputStream archived) throws IOException {
-        String taskId = UUID.randomUUID().toString().replaceAll("-", "");
+        String taskId = idGenerator.generate().toString().replaceAll("-", "");
         log.info("taskId: {}", taskId);
 
         Path taskPath = Paths.get(deployDir, taskId);
@@ -57,7 +62,7 @@ public class DeployServiceImpl implements DeployService {
             throw new FileNotFoundException(taskPath);
         }
 
-        for (String candidate: installScriptCandidates) {
+        for (String candidate : installScriptCandidates) {
             File installScript = new File(taskPath, candidate);
             if (!installScript.exists()) {
                 continue;

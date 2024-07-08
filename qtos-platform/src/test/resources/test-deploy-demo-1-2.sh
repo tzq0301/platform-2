@@ -24,20 +24,22 @@ cd $WORKDIR
 task_id=$(http --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=demo-1 dependentTaskIds= machineId=1 file@$TARFILE_1 | yq ".data.taskId")
 
 echo $task_id
+echo
 
 # ------------------------------------------------------------
 
-http POST localhost:9200/deploy/install taskId=$task_id
+http --body POST localhost:9200/deploy/install taskId=$task_id
 
 # ------------------------------------------------------------
 
 task_id=$(http --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=demo-2 dependentTaskIds=$task_id machineId=1 file@$TARFILE_2 | yq ".data.taskId")
 
 echo $task_id
+echo
 
 # ------------------------------------------------------------
 
-http POST localhost:9200/deploy/install taskId=$task_id
+http --body POST localhost:9200/deploy/install taskId=$task_id
 
 # ------------------------------------------------------------
 

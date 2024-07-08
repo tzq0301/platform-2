@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosbase.infrastructure.impl;
+package cn.edu.nju.ics.qtosbase.infrastructure.file.impl;
 
-import cn.edu.nju.ics.qtosbase.infrastructure.FileStore;
+import cn.edu.nju.ics.qtosbase.infrastructure.file.FileStore;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
