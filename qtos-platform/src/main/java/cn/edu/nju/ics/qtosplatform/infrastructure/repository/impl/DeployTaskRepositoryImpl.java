@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
-import cn.edu.nju.ics.qtosplatform.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.entity.DeployTaskStatusEnum;
+import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
+import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatusEnum;
 import cn.edu.nju.ics.qtosplatform.infrastructure.repository.DeployTaskRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;

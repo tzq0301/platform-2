@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.entity;
+package cn.edu.nju.ics.qtosplatform.model.entity;
 
 import lombok.Data;
 

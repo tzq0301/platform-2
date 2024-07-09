@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
-import cn.edu.nju.ics.qtosplatform.entity.Project;
+import cn.edu.nju.ics.qtosplatform.model.entity.Project;
 import cn.edu.nju.ics.qtosplatform.infrastructure.repository.ProjectRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;

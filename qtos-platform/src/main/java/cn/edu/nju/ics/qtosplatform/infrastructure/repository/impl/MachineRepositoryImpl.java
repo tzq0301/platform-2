@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
-import cn.edu.nju.ics.qtosplatform.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.infrastructure.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;

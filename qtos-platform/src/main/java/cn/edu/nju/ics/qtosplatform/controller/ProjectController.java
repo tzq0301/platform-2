@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.controller;
 
-import cn.edu.nju.ics.qtosplatform.entity.model.ProjectsDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.ProjectsResponseDTO;
 import cn.edu.nju.ics.qtosplatform.service.ProjectService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ public class ProjectController {
     }
 
     @GetMapping("/projects")
-    public ProjectsDTO projects() {
+    public ProjectsResponseDTO projects() {
         return projectService.listProjects();
     }
 }

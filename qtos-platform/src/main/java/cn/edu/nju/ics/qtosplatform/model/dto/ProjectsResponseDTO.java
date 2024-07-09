@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.entity.model;
+package cn.edu.nju.ics.qtosplatform.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ProjectsDTO {
+public class ProjectsResponseDTO {
     List<Project> projects;
 
     @Data

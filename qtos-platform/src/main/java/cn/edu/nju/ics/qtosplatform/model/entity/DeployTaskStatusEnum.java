@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.entity;
+package cn.edu.nju.ics.qtosplatform.model.entity;
 
 public enum DeployTaskStatusEnum {
     UNDEPLOY(0), DEPLOYED(1);

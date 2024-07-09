@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
-import cn.edu.nju.ics.qtosplatform.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
