@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatusEnum;
+import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
@@ -49,7 +49,7 @@ public class DeployServiceImpl implements DeployService {
         String taskId = qtosBaseClient.upload(command.getArchived());
 
         DeployTask deployTask = new DeployTask(taskId, command.getServiceName(), command.getProjectId(),
-                command.getMachineId(), DeployTaskStatusEnum.UNDEPLOY, Arrays.asList(command.getDependentTaskIds()));
+                command.getMachineId(), DeployTaskStatus.UNDEPLOY, Arrays.asList(command.getDependentTaskIds()));
 
         deployTaskRepository.create(deployTask);
 
@@ -64,12 +64,12 @@ public class DeployServiceImpl implements DeployService {
 
         DeployTask deployTask = deployTaskRepository.findById(taskId);
 
-        if (deployTask.getStatus() != DeployTaskStatusEnum.UNDEPLOY) {
-            throw new RuntimeException("this status of task is not " + DeployTaskStatusEnum.UNDEPLOY + ": " + taskId);
+        if (deployTask.getStatus() != DeployTaskStatus.UNDEPLOY) {
+            throw new RuntimeException("this status of task is not " + DeployTaskStatus.UNDEPLOY + ": " + taskId);
         }
 
         deployTask.getDependentTaskIds().forEach(dependentTaskId -> {
-            if (deployTaskRepository.findById(dependentTaskId).getStatus() != DeployTaskStatusEnum.DEPLOYED) {
+            if (deployTaskRepository.findById(dependentTaskId).getStatus() != DeployTaskStatus.DEPLOYED) {
                 throw new RuntimeException("dependent task not deployed: " + dependentTaskId);
             }
         });
@@ -80,6 +80,6 @@ public class DeployServiceImpl implements DeployService {
 
         qtosBaseClient.install(Map.of("taskId", taskId));
 
-        deployTaskRepository.updateStatus(taskId, DeployTaskStatusEnum.DEPLOYED);
+        deployTaskRepository.updateStatus(taskId, DeployTaskStatus.DEPLOYED);
     }
 }

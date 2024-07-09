@@ -14,6 +14,6 @@ public class DeployTask {
     private String serviceName;
     private Long projectId;
     private Long machineId;
-    private DeployTaskStatusEnum status;
+    private DeployTaskStatus status;
     private List<String> dependentTaskIds;
 }

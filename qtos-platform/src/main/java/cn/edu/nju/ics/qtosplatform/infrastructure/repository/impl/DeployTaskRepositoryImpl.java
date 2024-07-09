@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatusEnum;
+import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.infrastructure.repository.DeployTaskRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
@@ -42,7 +42,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
     }
 
     @Override
-    public void updateStatus(@NonNull String taskId, @NonNull DeployTaskStatusEnum status) {
+    public void updateStatus(@NonNull String taskId, @NonNull DeployTaskStatus status) {
         jdbcClient.sql("""
                         UPDATE `deploy_task`
                         SET `status` = :status
