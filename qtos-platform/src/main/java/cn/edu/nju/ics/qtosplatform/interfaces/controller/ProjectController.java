@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.controller;
+package cn.edu.nju.ics.qtosplatform.interfaces.controller;
 
 import cn.edu.nju.ics.qtosplatform.model.dto.ProjectsResponseDTO;
 import cn.edu.nju.ics.qtosplatform.service.ProjectService;

@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.controller.result;
+package cn.edu.nju.ics.qtosplatform.interfaces.result;
 
 import org.springframework.lang.Nullable;
 

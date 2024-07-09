@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.controller.result;
+package cn.edu.nju.ics.qtosplatform.interfaces.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

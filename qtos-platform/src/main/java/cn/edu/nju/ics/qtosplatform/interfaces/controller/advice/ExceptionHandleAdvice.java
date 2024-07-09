@@ -1,8 +1,8 @@
-package cn.edu.nju.ics.qtosplatform.controller.advice;
+package cn.edu.nju.ics.qtosplatform.interfaces.controller.advice;
 
-import cn.edu.nju.ics.qtosplatform.controller.exception.InvalidArgumentsException;
-import cn.edu.nju.ics.qtosplatform.controller.result.Result;
-import cn.edu.nju.ics.qtosplatform.controller.result.ResultEnum;
+import cn.edu.nju.ics.qtosplatform.exception.InvalidArgumentsException;
+import cn.edu.nju.ics.qtosplatform.interfaces.result.Result;
+import cn.edu.nju.ics.qtosplatform.interfaces.result.ResultEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

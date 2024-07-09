@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.controller.advice;
+package cn.edu.nju.ics.qtosplatform.interfaces.controller.advice;
 
-import cn.edu.nju.ics.qtosplatform.controller.result.Result;
+import cn.edu.nju.ics.qtosplatform.interfaces.result.Result;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.core.MethodParameter;

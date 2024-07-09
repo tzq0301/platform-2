@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.controller;
+package cn.edu.nju.ics.qtosplatform.interfaces.controller;
 
-import cn.edu.nju.ics.qtosplatform.controller.exception.InvalidArgumentsException;
+import cn.edu.nju.ics.qtosplatform.exception.InvalidArgumentsException;
 import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.InstallRequestDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
