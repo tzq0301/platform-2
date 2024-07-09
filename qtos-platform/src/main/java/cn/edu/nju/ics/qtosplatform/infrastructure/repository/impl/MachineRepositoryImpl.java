@@ -1,5 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
+import cn.edu.nju.ics.qtosplatform.model.converter.MachineConverter;
+import cn.edu.nju.ics.qtosplatform.model.dataobject.MachineDO;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.infrastructure.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -12,8 +14,12 @@ import java.util.List;
 public class MachineRepositoryImpl implements MachineRepository {
     private final JdbcClient jdbcClient;
 
-    public MachineRepositoryImpl(JdbcClient jdbcClient) {
+    private final MachineConverter machineConverter;
+
+    public MachineRepositoryImpl(JdbcClient jdbcClient,
+                                 MachineConverter machineConverter) {
         this.jdbcClient = jdbcClient;
+        this.machineConverter = machineConverter;
     }
 
     @Override
@@ -26,8 +32,9 @@ public class MachineRepositoryImpl implements MachineRepository {
                         LIMIT 1
                         """)
                 .param("id", id)
-                .query(Machine.class)
+                .query(MachineDO.class)
                 .optional()
+                .map(machineConverter::toMachine)
                 .orElseThrow();
     }
 
@@ -39,7 +46,9 @@ public class MachineRepositoryImpl implements MachineRepository {
                         WHERE `project_id` = :projectId
                         """)
                 .param("projectId", projectId)
-                .query(Machine.class)
-                .list();
+                .query(MachineDO.class)
+                .stream()
+                .map(machineConverter::toMachine)
+                .toList();
     }
 }
