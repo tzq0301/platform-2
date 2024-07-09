@@ -14,6 +14,11 @@
 
     <url>https://git.nju.edu.cn/TZQ/qtos-demo</url>
 
+    <modules>
+        <module>../qtos-base</module>
+        <module>../qtos-platform</module>
+    </modules>
+
     <properties>
         <java.version>21</java.version>
         <maven.compiler.release>21</maven.compiler.release>
