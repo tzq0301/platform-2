@@ -1,9 +1,9 @@
-package cn.edu.nju.ics.qtosplatform.model.dataobject;
+package cn.edu.nju.ics.qtosplatform.model.po;
 
 import lombok.Data;
 
 @Data
-public class MachineDO {
+public class MachinePO {
     private Long id;
     private String alias;
     private Integer os;

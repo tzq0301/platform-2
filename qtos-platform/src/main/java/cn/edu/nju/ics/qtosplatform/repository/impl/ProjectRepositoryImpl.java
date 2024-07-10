@@ -1,8 +1,8 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
+package cn.edu.nju.ics.qtosplatform.repository.impl;
 
-import cn.edu.nju.ics.qtosplatform.infrastructure.repository.ProjectRepository;
+import cn.edu.nju.ics.qtosplatform.repository.ProjectRepository;
 import cn.edu.nju.ics.qtosplatform.model.converter.ProjectConverter;
-import cn.edu.nju.ics.qtosplatform.model.dataobject.ProjectDO;
+import cn.edu.nju.ics.qtosplatform.model.po.ProjectPO;
 import cn.edu.nju.ics.qtosplatform.model.entity.Project;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -27,7 +27,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                         SELECT *
                         FROM `project`
                         """)
-                .query(ProjectDO.class)
+                .query(ProjectPO.class)
                 .stream()
                 .map(projectConverter::toProject)
                 .toList();

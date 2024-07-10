@@ -1,9 +1,9 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
+package cn.edu.nju.ics.qtosplatform.repository.impl;
 
 import cn.edu.nju.ics.qtosplatform.model.converter.MachineConverter;
-import cn.edu.nju.ics.qtosplatform.model.dataobject.MachineDO;
+import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
-import cn.edu.nju.ics.qtosplatform.infrastructure.repository.MachineRepository;
+import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
@@ -32,7 +32,7 @@ public class MachineRepositoryImpl implements MachineRepository {
                         LIMIT 1
                         """)
                 .param("id", id)
-                .query(MachineDO.class)
+                .query(MachinePO.class)
                 .optional()
                 .map(machineConverter::toMachine)
                 .orElseThrow();
@@ -46,7 +46,7 @@ public class MachineRepositoryImpl implements MachineRepository {
                         WHERE `project_id` = :projectId
                         """)
                 .param("projectId", projectId)
-                .query(MachineDO.class)
+                .query(MachinePO.class)
                 .stream()
                 .map(machineConverter::toMachine)
                 .toList();

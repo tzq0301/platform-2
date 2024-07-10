@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
+package cn.edu.nju.ics.qtosplatform.repository;
 
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
