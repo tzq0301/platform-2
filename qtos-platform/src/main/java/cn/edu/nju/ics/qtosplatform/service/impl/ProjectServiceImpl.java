@@ -1,8 +1,9 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
-import cn.edu.nju.ics.qtosplatform.model.entity.Project;
+import cn.edu.nju.ics.qtosplatform.model.assembler.DeployTaskAssembler;
+import cn.edu.nju.ics.qtosplatform.model.assembler.MachineAssembler;
+import cn.edu.nju.ics.qtosplatform.model.assembler.ProjectAssembler;
+import cn.edu.nju.ics.qtosplatform.model.dto.ProjectDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.ProjectsResponseDTO;
 import cn.edu.nju.ics.qtosplatform.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
@@ -10,7 +11,6 @@ import cn.edu.nju.ics.qtosplatform.repository.ProjectRepository;
 import cn.edu.nju.ics.qtosplatform.service.ProjectService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,33 +21,43 @@ public class ProjectServiceImpl implements ProjectService {
 
     private final ProjectRepository projectRepository;
 
+    private final DeployTaskAssembler deployTaskAssembler;
+
+    private final MachineAssembler machineAssembler;
+
+    private final ProjectAssembler projectAssembler;
+
     public ProjectServiceImpl(DeployTaskRepository deployTaskRepository,
                               MachineRepository machineRepository,
-                              ProjectRepository projectRepository) {
+                              ProjectRepository projectRepository,
+                              DeployTaskAssembler deployTaskAssembler,
+                              MachineAssembler machineAssembler, ProjectAssembler projectAssembler) {
         this.deployTaskRepository = deployTaskRepository;
         this.machineRepository = machineRepository;
         this.projectRepository = projectRepository;
+        this.deployTaskAssembler = deployTaskAssembler;
+        this.machineAssembler = machineAssembler;
+        this.projectAssembler = projectAssembler;
     }
 
     @Override
     public ProjectsResponseDTO listProjects() {
-        ProjectsResponseDTO projectsResponseDTO = new ProjectsResponseDTO(new ArrayList<>());
-
-        var projects = projectRepository.listProjects();
-        for (Project project : projects) {
-            projectsResponseDTO.getProjects().add(new ProjectsResponseDTO.Project(project.getId(), project.getName()));
-        }
-
-        for (ProjectsResponseDTO.Project project : projectsResponseDTO.getProjects()) {
-            List<DeployTask> deployTasks = deployTaskRepository.listByProjectId(project.getId());
-            for (DeployTask deployTask : deployTasks) {
-                project.getTasks().add(new ProjectsResponseDTO.Task(deployTask.getId(), deployTask.getServiceName(), deployTask.getStatus().getStatus()));
-            }
-            for (Machine machine : machineRepository.listByProjectId(project.getId())) {
-                project.getMachines().add(new ProjectsResponseDTO.Machine(machine.getId(), machine.getAlias()));
-            }
-        }
-
-        return projectsResponseDTO;
+        List<ProjectDTO> projectDTOs = projectRepository.listProjects()
+                .stream()
+                .map(project -> {
+                    var machineDTOs = machineRepository
+                            .listByProjectId(project.getId())
+                            .stream()
+                            .map(machineAssembler::toDTO)
+                            .toList();
+                    var deployTaskDTOs = deployTaskRepository
+                            .listByProjectId(project.getId())
+                            .stream()
+                            .map(deployTaskAssembler::toDTO)
+                            .toList();
+                    return projectAssembler.toDTO(project, machineDTOs, deployTaskDTOs);
+                })
+                .toList();
+        return new ProjectsResponseDTO(projectDTOs);
     }
 }
