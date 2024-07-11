@@ -31,7 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
                               MachineRepository machineRepository,
                               ProjectRepository projectRepository,
                               DeployTaskAssembler deployTaskAssembler,
-                              MachineAssembler machineAssembler, ProjectAssembler projectAssembler) {
+                              MachineAssembler machineAssembler,
+                              ProjectAssembler projectAssembler) {
         this.deployTaskRepository = deployTaskRepository;
         this.machineRepository = machineRepository;
         this.projectRepository = projectRepository;
