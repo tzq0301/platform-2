@@ -64,8 +64,8 @@ public class DeployServiceImpl implements DeployService {
 
         DeployTask deployTask = deployTaskRepository.findById(taskId);
 
-        if (deployTask.getStatus() != DeployTaskStatus.UNDEPLOY) {
-            throw new RuntimeException("this status of task is not " + DeployTaskStatus.UNDEPLOY + ": " + taskId);
+        if (deployTask.getStatus() == DeployTaskStatus.DEPLOYED) {
+            throw new RuntimeException("this task is already deployed: " + taskId);
         }
 
         deployTask.getDependentTaskIds().forEach(dependentTaskId -> {
@@ -78,7 +78,12 @@ public class DeployServiceImpl implements DeployService {
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
-        qtosBaseClient.install(Map.of("taskId", taskId));
+        try {
+            qtosBaseClient.install(Map.of("taskId", taskId));
+        } catch (Exception e) {
+            deployTaskRepository.updateStatus(taskId, DeployTaskStatus.FAILED);
+            throw e;
+        }
 
         deployTaskRepository.updateStatus(taskId, DeployTaskStatus.DEPLOYED);
     }

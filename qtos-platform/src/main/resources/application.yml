@@ -5,6 +5,8 @@ spring:
     banner-mode: off
   profiles:
     active: dev
+  mvc:
+    log-resolved-exception: false
 
 server:
   port: 9200

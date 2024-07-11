@@ -4,7 +4,10 @@ import lombok.Getter;
 
 @Getter
 public enum DeployTaskStatus {
-    UNDEPLOY(0), DEPLOYED(1);
+    UNDEPLOY(0),
+    DEPLOYED(1),
+    FAILED(2),
+    ;
 
     private final Integer status;
 
@@ -16,6 +19,7 @@ public enum DeployTaskStatus {
         return switch (status) {
             case 0 -> DeployTaskStatus.UNDEPLOY;
             case 1 -> DeployTaskStatus.DEPLOYED;
+            case 2 -> DeployTaskStatus.FAILED;
             default -> throw new IllegalStateException("Unexpected value: " + status);
         };
     }
