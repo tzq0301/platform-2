@@ -54,4 +54,9 @@ public class QtosBaseClientImpl implements QtosBaseClient {
     public void install(Map<String, Object> params) {
         restTemplate.postForObject(String.format("http://%s:%d/deploy/install", baseUrl, port), params, Void.class);
     }
+
+    @Override
+    public void uninstall(Map<String, Object> params) {
+        restTemplate.postForObject(String.format("http://%s:%d/deploy/uninstall", baseUrl, port), params, Void.class);
+    }
 }

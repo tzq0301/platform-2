@@ -12,3 +12,4 @@ server:
 qtos:
   base:
     install-script-candidates: install.sh,install.py
+    uninstall-script-candidates: uninstall.sh,uninstall.py

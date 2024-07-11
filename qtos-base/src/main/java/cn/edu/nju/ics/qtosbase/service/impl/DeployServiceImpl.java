@@ -25,15 +25,19 @@ public class DeployServiceImpl implements DeployService {
 
     private final List<String> installScriptCandidates;
 
+    private final List<String> uninstallScriptCandidates;
+
     private final FileStore fileStore;
 
     private final IdGenerator<UUID> idGenerator;
 
     public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir,
                              @Value("${qtos.base.install-script-candidates}") List<String> installScriptCandidates,
+                             @Value("${qtos.base.uninstall-script-candidates}") List<String> uninstallScriptCandidates,
                              FileStore fileStore) {
         this.deployDir = deployDir;
         this.installScriptCandidates = installScriptCandidates;
+        this.uninstallScriptCandidates = uninstallScriptCandidates;
         this.fileStore = fileStore;
         this.idGenerator = new UuidGenerator(UuidGenerator.Version.V7);
     }
@@ -58,16 +62,33 @@ public class DeployServiceImpl implements DeployService {
         String taskPath = String.format("%s/%s", deployDir, taskId);
 
         if (!new File(taskPath).exists()) {
-            log.warn("taskPath: {} does not exist", taskPath);
+            log.warn("taskPath for installing: {} does not exist", taskPath);
             throw new FileNotFoundException(taskPath);
         }
 
-        for (String candidate : installScriptCandidates) {
-            File installScript = new File(taskPath, candidate);
-            if (!installScript.exists()) {
+        executeAlongCandidates(taskPath, installScriptCandidates);
+    }
+
+    @Override
+    public void uninstall(@NonNull String taskId) throws IOException, InterruptedException {
+        String taskPath = String.format("%s/%s", deployDir, taskId);
+
+        if (!new File(taskPath).exists()) {
+            log.warn("taskPath for uninstalling: {} does not exist", taskPath);
+            throw new FileNotFoundException(taskPath);
+        }
+
+        executeAlongCandidates(taskPath, uninstallScriptCandidates);
+    }
+
+    private void executeAlongCandidates(String taskPath, List<String> scriptsCandidates) throws InterruptedException, IOException {
+        for (String candidate : scriptsCandidates) {
+            File script = new File(taskPath, candidate);
+            if (!script.exists()) {
+                log.info("script {} does not exist", candidate);
                 continue;
             }
-            log.info("install script: {}", installScript.getAbsolutePath());
+            log.info("script: {}", script.getAbsolutePath());
 
             String[] command = new String[2];
             if (candidate.endsWith(".sh")) {
@@ -75,19 +96,19 @@ public class DeployServiceImpl implements DeployService {
             } else if (candidate.endsWith(".py")) {
                 command[0] = "python3";
             }
-            command[1] = installScript.getAbsolutePath();
+            command[1] = script.getAbsolutePath();
 
             ProcessBuilder pb = new ProcessBuilder(command);
             pb.directory(new File(taskPath));
 
             int exitCode = pb.start().waitFor();
             if (exitCode == 0) {
-                log.info("install script success");
+                log.info("execute script success");
                 return;
             }
 
-            log.info("install script failed with exit code {}, try next", exitCode);
+            log.info("execute script failed with exit code {}, try next", exitCode);
         }
-        throw new RuntimeException("execution of all install scripts failed");
+        throw new RuntimeException("execution of all scripts failed");
     }
 }

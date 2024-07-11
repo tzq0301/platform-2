@@ -1,6 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.service;
 
 import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.UninstallCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UploadResponseDTO;
 import io.micrometer.common.lang.NonNull;
@@ -11,4 +12,6 @@ public interface DeployService {
     UploadResponseDTO upload(@NonNull UploadCommandDTO uploadCommandDTO) throws IOException;
 
     void install(@NonNull InstallCommandDTO installCommandDTO);
+
+    void uninstall(@NonNull UninstallCommandDTO uninstallCommandDTO);
 }

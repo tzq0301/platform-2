@@ -18,4 +18,6 @@ public interface DeployTaskAssembler {
     UploadCommandDTO toUploadCommandDTO(UploadRequestDTO uploadRequestDTO);
 
     InstallCommandDTO toInstallCommandDTO(InstallRequestDTO installRequestDTO);
+
+    UninstallCommandDTO toUninstallCommandDTO(UninstallRequestDTO uninstallRequestDTO);
 }

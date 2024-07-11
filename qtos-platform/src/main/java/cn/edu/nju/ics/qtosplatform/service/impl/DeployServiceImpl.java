@@ -1,13 +1,14 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
+import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClient;
+import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClientFactory;
+import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.UninstallCommandDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.UploadResponseDTO;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
-import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadResponseDTO;
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClient;
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClientFactory;
 import cn.edu.nju.ics.qtosplatform.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
@@ -49,7 +50,7 @@ public class DeployServiceImpl implements DeployService {
         String taskId = qtosBaseClient.upload(command.getArchived());
 
         DeployTask deployTask = new DeployTask(taskId, command.getServiceName(), command.getProjectId(),
-                command.getMachineId(), DeployTaskStatus.UNDEPLOY, Arrays.asList(command.getDependentTaskIds()));
+                command.getMachineId(), DeployTaskStatus.NOT_INSTALL_YET, Arrays.asList(command.getDependentTaskIds()));
 
         deployTaskRepository.create(deployTask);
 
@@ -64,13 +65,13 @@ public class DeployServiceImpl implements DeployService {
 
         DeployTask deployTask = deployTaskRepository.findById(taskId);
 
-        if (deployTask.getStatus() == DeployTaskStatus.DEPLOYED) {
-            throw new RuntimeException("this task is already deployed: " + taskId);
+        if (deployTask.getStatus() == DeployTaskStatus.INSTALLED) {
+            throw new RuntimeException("this task is already installed: " + taskId);
         }
 
         deployTask.getDependentTaskIds().forEach(dependentTaskId -> {
-            if (deployTaskRepository.findById(dependentTaskId).getStatus() != DeployTaskStatus.DEPLOYED) {
-                throw new RuntimeException("dependent task not deployed: " + dependentTaskId);
+            if (deployTaskRepository.findById(dependentTaskId).getStatus() != DeployTaskStatus.INSTALLED) {
+                throw new RuntimeException("dependent task not installed: " + dependentTaskId);
             }
         });
 
@@ -81,10 +82,31 @@ public class DeployServiceImpl implements DeployService {
         try {
             qtosBaseClient.install(Map.of("taskId", taskId));
         } catch (Exception e) {
-            deployTaskRepository.updateStatus(taskId, DeployTaskStatus.FAILED);
+            deployTaskRepository.updateStatus(taskId, DeployTaskStatus.INSTALL_FAILED);
             throw e;
         }
 
-        deployTaskRepository.updateStatus(taskId, DeployTaskStatus.DEPLOYED);
+        deployTaskRepository.updateStatus(taskId, DeployTaskStatus.INSTALLED);
+    }
+
+    @Override
+    public void uninstall(@NonNull UninstallCommandDTO command) {
+        String taskId = command.getTaskId();
+
+        log.info("uninstall taskId: {}", taskId);
+
+        DeployTask deployTask = deployTaskRepository.findById(taskId);
+
+        if (deployTask.getStatus() != DeployTaskStatus.INSTALLED) {
+            throw new RuntimeException("this task has not been installed: " + taskId);
+        }
+
+        Machine machine = machineRepository.findById(deployTask.getMachineId());
+
+        QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
+
+        qtosBaseClient.uninstall(Map.of("taskId", taskId));
+
+        deployTaskRepository.updateStatus(taskId, DeployTaskStatus.UNINSTALLED);
     }
 }

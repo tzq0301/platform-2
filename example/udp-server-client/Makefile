@@ -14,12 +14,12 @@ build: build-jar
 
 package: build
 	mkdir -p packages
-	cd client && tar -zc --no-xattrs --no-mac-metadata -f client.tar.gz client.jar install.sh
-	cd server && tar -zc --no-xattrs --no-mac-metadata -f server.tar.gz server.jar install.sh
+	cd client && tar -zc --no-xattrs --no-mac-metadata -f client.tar.gz client.jar install.sh uninstall.sh
+	cd server && tar -zc --no-xattrs --no-mac-metadata -f server.tar.gz server.jar install.sh uninstall.sh
 	cp {client/client.tar.gz,server/server.tar.gz} packages/
 
-deploy: package
-	bash deploy.sh
+test: package
+	bash test.sh
 
 clean:
 	rm -rf client/*.{class,jar,tar.gz}

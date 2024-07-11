@@ -11,4 +11,6 @@ public interface QtosBaseClient {
     String upload(@RequestParam("file") MultipartFile archived) throws IOException;
 
     void install(@RequestBody Map<String, Object> params);
+
+    void uninstall(@RequestBody Map<String, Object> params);
 }
