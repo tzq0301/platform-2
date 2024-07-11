@@ -1,20 +1,18 @@
 MVN = mvn
 
+build:
+	$(MVN) -f qtos-pom package
+
 dev-platform:
-	cd qtos-platform && $(MVN) spring-boot:test-run -Dspring-boot.run.profiles=dev
-
-build-platform:
-	cd qtos-platform && $(MVN) package
-
-build-base:
-	cd qtos-base && $(MVN) package
+	$(MVN) -f qtos-platform spring-boot:test-run -Dspring-boot.run.profiles=dev
 
 run-platform:
-	cd qtos-platform && $(MVN) spring-boot:run
+	$(MVN) -f qtos-platform spring-boot:run
 
 run-base:
-	cd qtos-base && $(MVN) spring-boot:run
+	$(MVN) -f qtos-base spring-boot:run
 
 clean:
 	rm -rf qtos-platform/target/
 	rm -rf qtos-base/target/
+	rm -rf qtos-base/localdeploydir/
