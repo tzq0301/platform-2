@@ -31,11 +31,7 @@ public interface DeployTaskConverter {
     }
 
     default DeployTaskStatus map(Integer value) {
-        return switch (value) {
-            case 0 -> DeployTaskStatus.UNDEPLOY;
-            case 1 -> DeployTaskStatus.DEPLOYED;
-            default -> throw new IllegalStateException("Unexpected value: " + value);
-        };
+        return DeployTaskStatus.from(value);
     }
 
     default Integer map(DeployTaskStatus status) {

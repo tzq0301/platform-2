@@ -10,10 +10,6 @@ public interface MachineConverter {
     Machine toMachine(MachinePO machinePO);
 
     default OsEnum map(Integer value) {
-        return switch (value) {
-            case 0 -> OsEnum.LINUX;
-            case 1 -> OsEnum.WINDOWS;
-            default -> throw new IllegalStateException("Unexpected value: " + value);
-        };
+        return OsEnum.from(value);
     }
 }
