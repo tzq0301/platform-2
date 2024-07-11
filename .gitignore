@@ -51,3 +51,5 @@ vendor/
 *.out
 
 qtos-base/localdeploydir
+
+example/udp-server-client/packages
