@@ -1,6 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.interfaces.controller;
 
 import cn.edu.nju.ics.qtosplatform.exception.InvalidArgumentsException;
+import cn.edu.nju.ics.qtosplatform.model.assembler.DeployTaskAssembler;
 import cn.edu.nju.ics.qtosplatform.model.dto.*;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
 import org.springframework.util.StringUtils;
@@ -14,26 +15,27 @@ import java.io.IOException;
 public class DeployController {
     private final DeployService deployService;
 
-    public DeployController(DeployService deployService) {
+    private final DeployTaskAssembler deployTaskAssembler;
+
+    public DeployController(DeployService deployService,
+                            DeployTaskAssembler deployTaskAssembler) {
         this.deployService = deployService;
+        this.deployTaskAssembler = deployTaskAssembler;
     }
 
     @PostMapping("/upload")
     public UploadResponseDTO upload(UploadRequestDTO request) throws IOException {
-        var command = new UploadCommandDTO(request.getServiceName(), request.getProjectId(),
-                request.getMachineId(), request.getDependentTaskIds(), request.getFile());
+        var command = deployTaskAssembler.toUploadCommandDTO(request);
         return deployService.upload(command);
     }
 
     @PostMapping("/install")
     public void install(@RequestBody InstallRequestDTO request) {
-        String taskId = request.getTaskId();
-
-        if (!StringUtils.hasText(taskId)) {
+        if (!StringUtils.hasText(request.getTaskId())) {
             throw new InvalidArgumentsException("taskId is empty");
         }
 
-        InstallCommandDTO command = new InstallCommandDTO(taskId);
+        var command = deployTaskAssembler.toInstallCommandDTO(request);
         deployService.install(command);
     }
 }
