@@ -53,3 +53,5 @@ vendor/
 qtos-base/localdeploydir
 
 example/udp-server-client/packages
+
+!example/x11/ui/simcity-ui.jar
