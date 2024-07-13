@@ -8,7 +8,7 @@ set -euo pipefail
 
 echo "action=upload file=server.tar.gz"
 
-server_task_id=$(http  --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=udp-server dependentTaskIds= machineId=1 file@packages/server.tar.gz | yq ".data.taskId")
+server_task_id=$(http --body -f POST localhost:9200/deploy/upload projectId=1 serviceName=udp-server dependentTaskIds= machineId=1 file@packages/server.tar.gz | yq ".data.taskId")
 
 echo "install server_task_id=$server_task_id"
 
