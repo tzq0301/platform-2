@@ -28,6 +28,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                         FROM `project`
                         """)
                 .query(ProjectPO.class)
+                .list()
                 .stream()
                 .map(projectConverter::toProject)
                 .toList();

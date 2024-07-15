@@ -47,6 +47,7 @@ public class MachineRepositoryImpl implements MachineRepository {
                         """)
                 .param("projectId", projectId)
                 .query(MachinePO.class)
+                .list()
                 .stream()
                 .map(machineConverter::toMachine)
                 .toList();

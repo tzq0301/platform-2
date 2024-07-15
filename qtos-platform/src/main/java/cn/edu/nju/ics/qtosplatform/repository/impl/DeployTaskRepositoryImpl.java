@@ -101,6 +101,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                         """)
                 .param("projectId", projectId)
                 .query(DeployTaskPO.class)
+                .list()
                 .stream()
                 .map(deployTaskConverter::toDeployTask)
                 .toList();
