@@ -10,10 +10,10 @@ public enum DeployTaskStatus {
     UNINSTALLED(3),
     ;
 
-    private final Integer status;
+    private final Integer value;
 
-    DeployTaskStatus(Integer status) {
-        this.status = status;
+    DeployTaskStatus(Integer value) {
+        this.value = value;
     }
 
     public static DeployTaskStatus from(Integer status) {

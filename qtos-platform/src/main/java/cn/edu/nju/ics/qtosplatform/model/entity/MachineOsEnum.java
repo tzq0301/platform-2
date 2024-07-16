@@ -3,19 +3,19 @@ package cn.edu.nju.ics.qtosplatform.model.entity;
 import lombok.Getter;
 
 @Getter
-public enum OsEnum {
+public enum MachineOsEnum {
     LINUX(0), WINDOWS(1);
 
     private final Integer type;
 
-    OsEnum(Integer type) {
+    MachineOsEnum(Integer type) {
         this.type = type;
     }
 
-    public static OsEnum from(Integer type) {
+    public static MachineOsEnum from(Integer type) {
         return switch (type) {
-            case 0 -> OsEnum.LINUX;
-            case 1 -> OsEnum.WINDOWS;
+            case 0 -> MachineOsEnum.LINUX;
+            case 1 -> MachineOsEnum.WINDOWS;
             default -> throw new IllegalStateException("Unexpected value: " + type);
         };
     }

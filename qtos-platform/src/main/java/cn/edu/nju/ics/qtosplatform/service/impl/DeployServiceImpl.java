@@ -2,13 +2,13 @@ package cn.edu.nju.ics.qtosplatform.service.impl;
 
 import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
 import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClientFactory;
-import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UninstallCommandDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadResponseDTO;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.InstallRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.UninstallRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.UploadRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.response.UploadResponse;
 import cn.edu.nju.ics.qtosplatform.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
@@ -42,24 +42,24 @@ public class DeployServiceImpl implements DeployService {
     }
 
     @Override
-    public UploadResponseDTO upload(@NonNull UploadCommandDTO command) throws IOException {
-        Machine machine = machineRepository.findById(command.getMachineId());
+    public UploadResponse upload(@NonNull UploadRequest request) throws IOException {
+        Machine machine = machineRepository.findById(request.getMachineId());
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
-        String taskId = qtosBaseClient.upload(command.getArchived());
+        String taskId = qtosBaseClient.upload(request.getFile());
 
-        DeployTask deployTask = new DeployTask(taskId, command.getServiceName(), command.getProjectId(),
-                command.getMachineId(), DeployTaskStatus.NOT_INSTALL_YET, Arrays.asList(command.getDependentTaskIds()));
+        DeployTask deployTask = new DeployTask(taskId, request.getServiceName(), request.getProjectId(),
+                request.getMachineId(), DeployTaskStatus.NOT_INSTALL_YET, Arrays.asList(request.getDependentTaskIds()));
 
         deployTaskRepository.create(deployTask);
 
-        return new UploadResponseDTO(taskId);
+        return new UploadResponse(taskId);
     }
 
     @Override
-    public void install(@NonNull InstallCommandDTO command) {
-        String taskId = command.getTaskId();
+    public void install(@NonNull InstallRequest request) {
+        String taskId = request.getTaskId();
 
         log.info("install taskId: {}", taskId);
 
@@ -90,8 +90,8 @@ public class DeployServiceImpl implements DeployService {
     }
 
     @Override
-    public void uninstall(@NonNull UninstallCommandDTO command) {
-        String taskId = command.getTaskId();
+    public void uninstall(@NonNull UninstallRequest request) {
+        String taskId = request.getTaskId();
 
         log.info("uninstall taskId: {}", taskId);
 

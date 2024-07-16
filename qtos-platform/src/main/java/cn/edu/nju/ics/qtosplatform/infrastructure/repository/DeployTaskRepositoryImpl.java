@@ -39,15 +39,15 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                 .param("status", deployTaskPO.getStatus())
                 .update();
 
-        deployTaskConverter.toDeployTaskDependencies(deployTask).forEach(po -> {
-            jdbcClient.sql("""
-                            INSERT INTO `deploy_task_dependency`(`source_deploy_task_id`, `target_deploy_task_id`)
-                            VALUES (:sourceDeployTaskId, :targetDeployTaskId)
-                            """)
-                    .param("sourceDeployTaskId", po.getSourceDeployTaskId())
-                    .param("targetDeployTaskId", po.getTargetDeployTaskId())
-                    .update();
-        });
+        deployTaskConverter.toDeployTaskDependencies(deployTask).forEach(po ->
+                jdbcClient.sql("""
+                                INSERT INTO `deploy_task_dependency`(`source_deploy_task_id`, `target_deploy_task_id`)
+                                VALUES (:sourceDeployTaskId, :targetDeployTaskId)
+                                """)
+                        .param("sourceDeployTaskId", po.getSourceDeployTaskId())
+                        .param("targetDeployTaskId", po.getTargetDeployTaskId())
+                        .update()
+        );
     }
 
     @Override
@@ -57,7 +57,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                         SET `status` = :status
                         WHERE `id` = :taskId
                         """)
-                .param("status", status.getStatus())
+                .param("status", status.getValue())
                 .param("taskId", taskId)
                 .update();
     }
@@ -87,9 +87,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                 .query(DeployTaskDependencyPO.class)
                 .list();
 
-        DeployTask deployTask = deployTaskConverter.toDeployTask(deployTaskPO);
-        deployTask.setDependentTaskIds(deployTaskConverter.mapToDependentTaskIds(dependentTaskDependencyPOs));
-        return deployTask;
+        return deployTaskConverter.toDeployTask(deployTaskPO, dependentTaskDependencyPOs);
     }
 
     @Override

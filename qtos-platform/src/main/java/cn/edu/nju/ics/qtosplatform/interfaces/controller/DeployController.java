@@ -1,11 +1,10 @@
 package cn.edu.nju.ics.qtosplatform.interfaces.controller;
 
 import cn.edu.nju.ics.qtosplatform.exception.InvalidArgumentsException;
-import cn.edu.nju.ics.qtosplatform.model.assembler.DeployTaskAssembler;
-import cn.edu.nju.ics.qtosplatform.model.dto.InstallRequestDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UninstallRequestDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadRequestDTO;
-import cn.edu.nju.ics.qtosplatform.model.dto.UploadResponseDTO;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.InstallRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.UninstallRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.request.UploadRequest;
+import cn.edu.nju.ics.qtosplatform.model.dto.response.UploadResponse;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,37 +19,30 @@ import java.io.IOException;
 public class DeployController {
     private final DeployService deployService;
 
-    private final DeployTaskAssembler deployTaskAssembler;
-
-    public DeployController(DeployService deployService,
-                            DeployTaskAssembler deployTaskAssembler) {
+    public DeployController(DeployService deployService) {
         this.deployService = deployService;
-        this.deployTaskAssembler = deployTaskAssembler;
     }
 
     @PostMapping("/upload")
-    public UploadResponseDTO upload(UploadRequestDTO request) throws IOException {
-        var command = deployTaskAssembler.toUploadCommandDTO(request);
-        return deployService.upload(command);
+    public UploadResponse upload(UploadRequest request) throws IOException {
+        return deployService.upload(request);
     }
 
     @PostMapping("/install")
-    public void install(@RequestBody InstallRequestDTO request) {
+    public void install(@RequestBody InstallRequest request) {
         if (!StringUtils.hasText(request.getTaskId())) {
             throw new InvalidArgumentsException("install taskId is empty");
         }
 
-        var command = deployTaskAssembler.toInstallCommandDTO(request);
-        deployService.install(command);
+        deployService.install(request);
     }
 
     @PostMapping("/uninstall")
-    public void uninstall(@RequestBody UninstallRequestDTO request) {
+    public void uninstall(@RequestBody UninstallRequest request) {
         if (!StringUtils.hasText(request.getTaskId())) {
             throw new InvalidArgumentsException("uninstall taskId is empty");
         }
 
-        var command = deployTaskAssembler.toUninstallCommandDTO(request);
-        deployService.uninstall(command);
+        deployService.uninstall(request);
     }
 }
