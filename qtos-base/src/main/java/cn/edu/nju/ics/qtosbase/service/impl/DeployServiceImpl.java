@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosbase.service.impl;
 
-import cn.edu.nju.ics.qtosbase.infrastructure.file.FileStore;
+import cn.edu.nju.ics.qtosbase.infrastructure.file.FileManager;
 import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.IdGenerator;
 import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.impl.UuidGenerator;
 import cn.edu.nju.ics.qtosbase.service.DeployService;
@@ -27,18 +27,18 @@ public class DeployServiceImpl implements DeployService {
 
     private final List<String> uninstallScriptCandidates;
 
-    private final FileStore fileStore;
+    private final FileManager fileManager;
 
     private final IdGenerator<UUID> idGenerator;
 
     public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir,
                              @Value("${qtos.base.install-script-candidates}") List<String> installScriptCandidates,
                              @Value("${qtos.base.uninstall-script-candidates}") List<String> uninstallScriptCandidates,
-                             FileStore fileStore) {
+                             FileManager fileManager) {
         this.deployDir = deployDir;
         this.installScriptCandidates = installScriptCandidates;
         this.uninstallScriptCandidates = uninstallScriptCandidates;
-        this.fileStore = fileStore;
+        this.fileManager = fileManager;
         this.idGenerator = new UuidGenerator(UuidGenerator.Version.V7);
     }
 
@@ -48,10 +48,10 @@ public class DeployServiceImpl implements DeployService {
         log.info("taskId: {}", taskId);
 
         Path taskPath = Paths.get(deployDir, taskId);
-        fileStore.createDirectoryRecursively(taskPath);
+        fileManager.createDirectoryRecursively(taskPath);
         log.info("create taskPath: {}", taskPath.toAbsolutePath());
 
-        fileStore.extractTarAndTransport(archived, taskPath);
+        fileManager.extractTarAndTransport(archived, taskPath);
         log.info("transport the archived file and unarchive it to: {}", taskPath.toAbsolutePath());
 
         return taskId;
