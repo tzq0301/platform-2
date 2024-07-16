@@ -1,10 +1,11 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
-import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
-import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
+import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
@@ -25,14 +26,14 @@ public class MachineRepositoryImpl implements MachineRepository {
 
     @Override
     @NonNull
-    public Machine findById(@NonNull Long id) {
+    public Machine findById(@NonNull MachineId id) {
         return jdbcClient.sql("""
                         SELECT *
                         FROM `machine`
                         WHERE `id` = :id
                         LIMIT 1
                         """)
-                .param("id", id)
+                .param("id", id.value())
                 .query(MachinePO.class)
                 .optional()
                 .map(machineConverter::toMachine)

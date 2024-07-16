@@ -6,7 +6,7 @@ import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskPO;
-import cn.edu.nju.ics.qtosplatform.repository.DeployTaskRepository;
+import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;

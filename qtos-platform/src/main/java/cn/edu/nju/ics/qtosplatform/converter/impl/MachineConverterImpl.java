@@ -1,8 +1,10 @@
 package cn.edu.nju.ics.qtosplatform.converter.impl;
 
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
-import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
-import cn.edu.nju.ics.qtosplatform.model.entity.MachineOsEnum;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineOsEnum;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class MachineConverterImpl implements MachineConverter {
     @Override
     public Machine toMachine(MachinePO machinePO) {
-        return new Machine(machinePO.getId(), machinePO.getAlias(), MachineOsEnum.from(machinePO.getOs()), machinePO.getHost(), machinePO.getProjectId());
+        return new Machine(new MachineId(machinePO.getId()), machinePO.getAlias(), MachineOsEnum.from(machinePO.getOs()), machinePO.getHost(), new ProjectId(machinePO.getProjectId()));
     }
 }

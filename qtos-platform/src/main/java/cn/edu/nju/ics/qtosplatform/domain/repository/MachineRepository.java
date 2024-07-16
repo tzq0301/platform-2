@@ -1,14 +1,15 @@
-package cn.edu.nju.ics.qtosplatform.repository;
+package cn.edu.nju.ics.qtosplatform.domain.repository;
 
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
-import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 
 public interface MachineRepository {
     @NonNull
-    Machine findById(@NonNull Long id);
+    Machine findById(@NonNull MachineId id);
 
     List<Machine> listByProjectId(@NonNull ProjectId projectId);
 }

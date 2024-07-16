@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.repository;
+package cn.edu.nju.ics.qtosplatform.domain.repository;
 
 import cn.edu.nju.ics.qtosplatform.domain.aggregator.Project;
 

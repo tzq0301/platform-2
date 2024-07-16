@@ -1,16 +1,17 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
 import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClientFactory;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
-import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
 import cn.edu.nju.ics.qtosplatform.model.dto.request.InstallRequest;
 import cn.edu.nju.ics.qtosplatform.model.dto.request.UninstallRequest;
 import cn.edu.nju.ics.qtosplatform.model.dto.request.UploadRequest;
 import cn.edu.nju.ics.qtosplatform.model.dto.response.UploadResponse;
-import cn.edu.nju.ics.qtosplatform.repository.DeployTaskRepository;
-import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
+import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
+import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +44,7 @@ public class DeployServiceImpl implements DeployService {
 
     @Override
     public UploadResponse upload(@NonNull UploadRequest request) throws IOException {
-        Machine machine = machineRepository.findById(request.getMachineId());
+        Machine machine = machineRepository.findById(new MachineId(request.getMachineId()));
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
@@ -75,7 +76,7 @@ public class DeployServiceImpl implements DeployService {
             }
         });
 
-        Machine machine = machineRepository.findById(deployTask.getMachineId());
+        Machine machine = machineRepository.findById(new MachineId(deployTask.getMachineId()));
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
@@ -101,7 +102,7 @@ public class DeployServiceImpl implements DeployService {
             throw new RuntimeException("this task has not been installed: " + taskId);
         }
 
-        Machine machine = machineRepository.findById(deployTask.getMachineId());
+        Machine machine = machineRepository.findById(new MachineId(deployTask.getMachineId()));
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
