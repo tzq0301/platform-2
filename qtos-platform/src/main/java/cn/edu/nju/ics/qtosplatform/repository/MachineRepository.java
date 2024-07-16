@@ -1,5 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.repository;
 
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import org.springframework.lang.NonNull;
 
@@ -9,5 +10,5 @@ public interface MachineRepository {
     @NonNull
     Machine findById(@NonNull Long id);
 
-    List<Machine> listByProjectId(@NonNull Long projectId);
+    List<Machine> listByProjectId(@NonNull ProjectId projectId);
 }

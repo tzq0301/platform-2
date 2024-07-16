@@ -1,6 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
@@ -91,13 +92,13 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
     }
 
     @Override
-    public List<DeployTask> listByProjectId(@NonNull Long projectId) {
+    public List<DeployTask> listByProjectId(@NonNull ProjectId projectId) {
         return jdbcClient.sql("""
                         SELECT *
                         FROM `deploy_task`
                         WHERE `project_id` = :projectId
                         """)
-                .param("projectId", projectId)
+                .param("projectId", projectId.value())
                 .query(DeployTaskPO.class)
                 .list()
                 .stream()

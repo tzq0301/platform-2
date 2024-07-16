@@ -1,5 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.repository;
 
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import org.springframework.lang.NonNull;
@@ -14,5 +15,5 @@ public interface DeployTaskRepository {
     @NonNull
     DeployTask findById(@NonNull String taskId);
 
-    List<DeployTask> listByProjectId(@NonNull Long projectId);
+    List<DeployTask> listByProjectId(@NonNull ProjectId projectId);
 }

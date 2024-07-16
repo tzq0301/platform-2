@@ -1,6 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
 import cn.edu.nju.ics.qtosplatform.repository.MachineRepository;
@@ -39,13 +40,13 @@ public class MachineRepositoryImpl implements MachineRepository {
     }
 
     @Override
-    public List<Machine> listByProjectId(@NonNull Long projectId) {
+    public List<Machine> listByProjectId(@NonNull ProjectId projectId) {
         return jdbcClient.sql("""
                         SELECT *
                         FROM `machine`
                         WHERE `project_id` = :projectId
                         """)
-                .param("projectId", projectId)
+                .param("projectId", projectId.value())
                 .query(MachinePO.class)
                 .list()
                 .stream()
