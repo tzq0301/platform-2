@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.model.converter.impl;
+package cn.edu.nju.ics.qtosplatform.converter.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.converter.DeployTaskConverter;
+import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskPO;

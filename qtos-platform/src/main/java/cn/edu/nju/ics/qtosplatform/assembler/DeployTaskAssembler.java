@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.model.assembler;
+package cn.edu.nju.ics.qtosplatform.assembler;
 
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.dto.DeployTaskDTO;

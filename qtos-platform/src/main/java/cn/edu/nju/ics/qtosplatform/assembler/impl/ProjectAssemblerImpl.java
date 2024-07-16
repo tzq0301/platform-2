@@ -1,8 +1,8 @@
-package cn.edu.nju.ics.qtosplatform.model.assembler.impl;
+package cn.edu.nju.ics.qtosplatform.assembler.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.assembler.DeployTaskAssembler;
-import cn.edu.nju.ics.qtosplatform.model.assembler.MachineAssembler;
-import cn.edu.nju.ics.qtosplatform.model.assembler.ProjectAssembler;
+import cn.edu.nju.ics.qtosplatform.assembler.DeployTaskAssembler;
+import cn.edu.nju.ics.qtosplatform.assembler.MachineAssembler;
+import cn.edu.nju.ics.qtosplatform.assembler.ProjectAssembler;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.entity.Project;

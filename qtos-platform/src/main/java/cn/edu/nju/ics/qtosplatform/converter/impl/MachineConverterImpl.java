@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.model.converter.impl;
+package cn.edu.nju.ics.qtosplatform.converter.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.converter.MachineConverter;
+import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.entity.MachineOsEnum;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;

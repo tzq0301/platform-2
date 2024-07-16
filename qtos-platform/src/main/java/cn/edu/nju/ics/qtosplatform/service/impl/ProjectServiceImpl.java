@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.assembler.ProjectAssembler;
+import cn.edu.nju.ics.qtosplatform.assembler.ProjectAssembler;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.dto.ProjectDTO;

@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.model.assembler.impl;
+package cn.edu.nju.ics.qtosplatform.assembler.impl;
 
-import cn.edu.nju.ics.qtosplatform.model.assembler.DeployTaskAssembler;
+import cn.edu.nju.ics.qtosplatform.assembler.DeployTaskAssembler;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.dto.DeployTaskDTO;
 import org.springframework.stereotype.Component;

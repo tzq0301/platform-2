@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
-import cn.edu.nju.ics.qtosplatform.model.converter.DeployTaskConverter;
+import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
