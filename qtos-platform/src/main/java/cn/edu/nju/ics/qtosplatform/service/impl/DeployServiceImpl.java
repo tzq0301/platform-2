@@ -1,17 +1,17 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
-import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
-import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
-import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClientFactory;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.DeployTask;
 import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
-import cn.edu.nju.ics.qtosplatform.model.dto.request.InstallRequest;
-import cn.edu.nju.ics.qtosplatform.model.dto.request.UninstallRequest;
-import cn.edu.nju.ics.qtosplatform.model.dto.request.UploadRequest;
-import cn.edu.nju.ics.qtosplatform.model.dto.response.UploadResponse;
 import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskId;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskStatus;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClientFactory;
+import cn.edu.nju.ics.qtosplatform.model.command.InstallCommand;
+import cn.edu.nju.ics.qtosplatform.model.command.UninstallCommand;
+import cn.edu.nju.ics.qtosplatform.model.command.UploadCommand;
+import cn.edu.nju.ics.qtosplatform.model.dto.response.UploadResponse;
 import cn.edu.nju.ics.qtosplatform.service.DeployService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +19,6 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 
 @Service
@@ -43,31 +42,30 @@ public class DeployServiceImpl implements DeployService {
     }
 
     @Override
-    public UploadResponse upload(@NonNull UploadRequest request) throws IOException {
-        Machine machine = machineRepository.findById(new MachineId(request.getMachineId()));
+    public UploadResponse upload(@NonNull UploadCommand command) throws IOException {
+        Machine machine = machineRepository.findById(command.machineId());
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
-        String taskId = qtosBaseClient.upload(request.getFile());
+        DeployTaskId taskId = new DeployTaskId(qtosBaseClient.upload(command.file()));
 
-        DeployTask deployTask = new DeployTask(taskId, request.getServiceName(), request.getProjectId(),
-                request.getMachineId(), DeployTaskStatus.NOT_INSTALL_YET, Arrays.asList(request.getDependentTaskIds()));
+        DeployTask deployTask = new DeployTask(taskId, command.serviceName(), command.projectId(), command.machineId(), DeployTaskStatus.NOT_INSTALL_YET, command.dependentTaskIds());
 
         deployTaskRepository.create(deployTask);
 
-        return new UploadResponse(taskId);
+        return new UploadResponse(taskId.value());
     }
 
     @Override
-    public void install(@NonNull InstallRequest request) {
-        String taskId = request.getTaskId();
+    public void install(@NonNull InstallCommand command) {
+        DeployTaskId deployTaskId = command.taskId();
 
-        log.info("install taskId: {}", taskId);
+        log.info("install taskId: {}", deployTaskId);
 
-        DeployTask deployTask = deployTaskRepository.findById(taskId);
+        DeployTask deployTask = deployTaskRepository.findById(deployTaskId);
 
         if (deployTask.getStatus() == DeployTaskStatus.INSTALLED) {
-            throw new RuntimeException("this task is already installed: " + taskId);
+            throw new RuntimeException("this task is already installed: " + deployTaskId);
         }
 
         deployTask.getDependentTaskIds().forEach(dependentTaskId -> {
@@ -76,23 +74,23 @@ public class DeployServiceImpl implements DeployService {
             }
         });
 
-        Machine machine = machineRepository.findById(new MachineId(deployTask.getMachineId()));
+        Machine machine = machineRepository.findById(deployTask.getMachineId());
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
         try {
-            qtosBaseClient.install(Map.of("taskId", taskId));
+            qtosBaseClient.install(Map.of("taskId", deployTaskId.value()));
         } catch (Exception e) {
-            deployTaskRepository.updateStatus(taskId, DeployTaskStatus.INSTALL_FAILED);
+            deployTaskRepository.updateStatus(deployTaskId, DeployTaskStatus.INSTALL_FAILED);
             throw e;
         }
 
-        deployTaskRepository.updateStatus(taskId, DeployTaskStatus.INSTALLED);
+        deployTaskRepository.updateStatus(deployTaskId, DeployTaskStatus.INSTALLED);
     }
 
     @Override
-    public void uninstall(@NonNull UninstallRequest request) {
-        String taskId = request.getTaskId();
+    public void uninstall(@NonNull UninstallCommand command) {
+        DeployTaskId taskId = command.taskId();
 
         log.info("uninstall taskId: {}", taskId);
 
@@ -102,11 +100,11 @@ public class DeployServiceImpl implements DeployService {
             throw new RuntimeException("this task has not been installed: " + taskId);
         }
 
-        Machine machine = machineRepository.findById(new MachineId(deployTask.getMachineId()));
+        Machine machine = machineRepository.findById(deployTask.getMachineId());
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
-        qtosBaseClient.uninstall(Map.of("taskId", taskId));
+        qtosBaseClient.uninstall(Map.of("taskId", taskId.value()));
 
         deployTaskRepository.updateStatus(taskId, DeployTaskStatus.UNINSTALLED);
     }

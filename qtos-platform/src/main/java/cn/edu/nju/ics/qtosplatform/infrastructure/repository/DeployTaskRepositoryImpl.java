@@ -1,9 +1,10 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTaskStatus;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.DeployTask;
+import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskPO;
 import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
@@ -52,20 +53,20 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
     }
 
     @Override
-    public void updateStatus(@NonNull String taskId, @NonNull DeployTaskStatus status) {
+    public void updateStatus(@NonNull DeployTaskId taskId, @NonNull DeployTaskStatus status) {
         jdbcClient.sql("""
                         UPDATE `deploy_task`
                         SET `status` = :status
                         WHERE `id` = :taskId
                         """)
                 .param("status", status.getValue())
-                .param("taskId", taskId)
+                .param("taskId", taskId.value())
                 .update();
     }
 
     @Override
     @NonNull
-    public DeployTask findById(@NonNull String taskId) {
+    public DeployTask findById(@NonNull DeployTaskId taskId) {
         var deployTaskPO = jdbcClient
                 .sql("""
                         SELECT *
@@ -73,7 +74,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                         WHERE `id` = :id
                         LIMIT 1
                         """)
-                .param("id", taskId)
+                .param("id", taskId.value())
                 .query(DeployTaskPO.class)
                 .optional()
                 .orElseThrow();
@@ -84,7 +85,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                         FROM `deploy_task_dependency`
                         WHERE `source_deploy_task_id` = :sourceDeployTaskId
                         """)
-                .param("sourceDeployTaskId", taskId)
+                .param("sourceDeployTaskId", taskId.value())
                 .query(DeployTaskDependencyPO.class)
                 .list();
 

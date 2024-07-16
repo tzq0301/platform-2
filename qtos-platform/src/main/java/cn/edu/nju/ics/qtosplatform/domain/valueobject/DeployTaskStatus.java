@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.model.entity;
+package cn.edu.nju.ics.qtosplatform.domain.valueobject;
 
 import lombok.Getter;
 

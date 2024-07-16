@@ -3,7 +3,7 @@ package cn.edu.nju.ics.qtosplatform.assembler.impl;
 import cn.edu.nju.ics.qtosplatform.assembler.DeployTaskAssembler;
 import cn.edu.nju.ics.qtosplatform.assembler.MachineAssembler;
 import cn.edu.nju.ics.qtosplatform.assembler.ProjectAssembler;
-import cn.edu.nju.ics.qtosplatform.model.entity.DeployTask;
+import cn.edu.nju.ics.qtosplatform.domain.aggregator.DeployTask;
 import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
 import cn.edu.nju.ics.qtosplatform.domain.aggregator.Project;
 import cn.edu.nju.ics.qtosplatform.model.dto.DeployTaskDTO;
