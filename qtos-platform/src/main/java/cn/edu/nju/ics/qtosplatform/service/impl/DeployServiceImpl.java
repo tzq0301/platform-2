@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClient;
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClientFactory;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClientFactory;
 import cn.edu.nju.ics.qtosplatform.model.dto.InstallCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UninstallCommandDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.UploadCommandDTO;

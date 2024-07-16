@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase;
+package cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase;
 
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.impl.QtosBaseClientImpl;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.impl.QtosBaseClientImpl;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

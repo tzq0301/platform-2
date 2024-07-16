@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase;
+package cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase;
 
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;

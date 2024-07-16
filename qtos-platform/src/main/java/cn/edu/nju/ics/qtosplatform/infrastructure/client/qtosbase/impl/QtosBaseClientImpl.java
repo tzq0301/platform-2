@@ -1,6 +1,6 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.impl;
+package cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.impl;
 
-import cn.edu.nju.ics.qtosplatform.infrastructure.qtosbase.QtosBaseClient;
+import cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase.QtosBaseClient;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;

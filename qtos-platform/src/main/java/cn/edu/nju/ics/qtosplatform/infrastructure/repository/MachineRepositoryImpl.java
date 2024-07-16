@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.repository.impl;
+package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.model.converter.MachineConverter;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;

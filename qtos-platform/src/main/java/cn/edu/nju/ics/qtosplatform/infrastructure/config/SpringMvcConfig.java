@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.httpserver;
+package cn.edu.nju.ics.qtosplatform.infrastructure.config.httpserver;
 
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
