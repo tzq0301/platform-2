@@ -1,8 +1,6 @@
 package cn.edu.nju.ics.qtosbase.service.impl;
 
 import cn.edu.nju.ics.qtosbase.infrastructure.file.FileManager;
-import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.IdGenerator;
-import cn.edu.nju.ics.qtosbase.infrastructure.idgenerator.impl.UuidGenerator;
 import cn.edu.nju.ics.qtosbase.service.DeployService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +14,6 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -29,8 +26,6 @@ public class DeployServiceImpl implements DeployService {
 
     private final FileManager fileManager;
 
-    private final IdGenerator<UUID> idGenerator;
-
     public DeployServiceImpl(@Value("${qtos.base.deploy-dir}") String deployDir,
                              @Value("${qtos.base.install-script-candidates}") List<String> installScriptCandidates,
                              @Value("${qtos.base.uninstall-script-candidates}") List<String> uninstallScriptCandidates,
@@ -39,12 +34,10 @@ public class DeployServiceImpl implements DeployService {
         this.installScriptCandidates = installScriptCandidates;
         this.uninstallScriptCandidates = uninstallScriptCandidates;
         this.fileManager = fileManager;
-        this.idGenerator = new UuidGenerator(UuidGenerator.Version.V7);
     }
 
     @Override
-    public String transport(@NonNull InputStream archived) throws IOException {
-        String taskId = idGenerator.generate().toString().replaceAll("-", "");
+    public void transport(@NonNull String taskId, @NonNull InputStream archived) throws IOException {
         log.info("taskId: {}", taskId);
 
         Path taskPath = Paths.get(deployDir, taskId);
@@ -53,8 +46,6 @@ public class DeployServiceImpl implements DeployService {
 
         fileManager.extractTarAndTransport(archived, taskPath);
         log.info("transport the archived file and unarchive it to: {}", taskPath.toAbsolutePath());
-
-        return taskId;
     }
 
     @Override

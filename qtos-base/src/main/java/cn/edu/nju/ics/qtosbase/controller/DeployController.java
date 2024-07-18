@@ -20,9 +20,10 @@ public class DeployController {
     }
 
     @PostMapping("/upload")
-    public String upload(@RequestParam("file") MultipartFile archived) throws IOException {
+    public void upload(@RequestParam("taskId") String taskId,
+                         @RequestParam("file") MultipartFile archived) throws IOException {
         InputStream inputStream = archived.getInputStream();
-        return deployService.transport(inputStream);
+        deployService.transport(taskId, inputStream);
     }
 
     @PostMapping("/install")

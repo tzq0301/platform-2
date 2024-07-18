@@ -1,16 +1,14 @@
 package cn.edu.nju.ics.qtosplatform.infrastructure.client.qtosbase;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Map;
 
 public interface QtosBaseClient {
-    String upload(@RequestParam("file") MultipartFile archived) throws IOException;
+    void upload(String taskId, MultipartFile archived) throws IOException;
 
-    void install(@RequestBody Map<String, Object> params);
+    void install(Map<String, Object> params);
 
-    void uninstall(@RequestBody Map<String, Object> params);
+    void uninstall(Map<String, Object> params);
 }

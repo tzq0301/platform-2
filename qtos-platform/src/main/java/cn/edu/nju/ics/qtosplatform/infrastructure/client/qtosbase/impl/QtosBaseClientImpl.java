@@ -29,7 +29,7 @@ public class QtosBaseClientImpl implements QtosBaseClient {
     }
 
     @Override
-    public String upload(MultipartFile archived) throws IOException {
+    public void upload(String taskId, MultipartFile archived) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -44,10 +44,11 @@ public class QtosBaseClientImpl implements QtosBaseClient {
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("file", fileEntity);
+        body.add("taskId", taskId);
 
         HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        return restTemplate.postForObject(String.format("http://%s:%d/deploy/upload", baseUrl, port), requestEntity, String.class);
+        restTemplate.postForObject(String.format("http://%s:%d/deploy/upload", baseUrl, port), requestEntity, Void.class);
     }
 
     @Override

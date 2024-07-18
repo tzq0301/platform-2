@@ -12,7 +12,7 @@ public interface DeployService {
      *
      * @param archived 压缩包
      */
-    String transport(@NonNull InputStream archived) throws IOException;
+    void transport(@NonNull String taskId, @NonNull InputStream archived) throws IOException;
 
     void install(@NonNull String taskId) throws IOException, InterruptedException;
 

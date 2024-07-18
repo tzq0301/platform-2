@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.util.IdGenerator;
 
 import java.io.IOException;
 import java.util.Map;
@@ -32,13 +33,18 @@ public class DeployServiceImpl implements DeployService {
 
     private final Integer qtosBasePort;
 
+    private final IdGenerator idGenerator;
+
     public DeployServiceImpl(@NonNull MachineRepository machineRepository,
-                             @NonNull DeployTaskRepository deployTaskRepository, QtosBaseClientFactory qtosBaseClientFactory,
-                             @Value("${qtos.platform.base-port}") Integer qtosBasePort) {
+                             @NonNull DeployTaskRepository deployTaskRepository,
+                             @NonNull QtosBaseClientFactory qtosBaseClientFactory,
+                             @Value("${qtos.platform.base-port}") Integer qtosBasePort,
+                             @NonNull IdGenerator idGenerator) {
         this.machineRepository = machineRepository;
         this.deployTaskRepository = deployTaskRepository;
         this.qtosBaseClientFactory = qtosBaseClientFactory;
         this.qtosBasePort = qtosBasePort;
+        this.idGenerator = idGenerator;
     }
 
     @Override
@@ -47,7 +53,9 @@ public class DeployServiceImpl implements DeployService {
 
         QtosBaseClient qtosBaseClient = qtosBaseClientFactory.create(machine.getHost(), qtosBasePort);
 
-        DeployTaskId taskId = new DeployTaskId(qtosBaseClient.upload(command.file()));
+        DeployTaskId taskId = new DeployTaskId(idGenerator.generateId().toString().replaceAll("-", ""));
+
+        qtosBaseClient.upload(taskId.value(), command.file());
 
         DeployTask deployTask = new DeployTask(taskId, command.serviceName(), command.projectId(), command.machineId(), DeployTaskStatus.NOT_INSTALL_YET, command.dependentTaskIds());
 
