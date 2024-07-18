@@ -13,6 +13,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Repository
 public class DeployTaskRepositoryImpl implements DeployTaskRepository {
@@ -77,7 +78,7 @@ public class DeployTaskRepositoryImpl implements DeployTaskRepository {
                 .param("id", taskId.value())
                 .query(DeployTaskPO.class)
                 .optional()
-                .orElseThrow();
+                .orElseThrow(() -> new NoSuchElementException("DeployTask " + taskId.value() + " not found"));
 
         var dependentTaskDependencyPOs = jdbcClient
                 .sql("""

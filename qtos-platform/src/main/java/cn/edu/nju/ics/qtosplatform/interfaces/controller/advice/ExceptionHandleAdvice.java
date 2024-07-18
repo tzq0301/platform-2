@@ -14,14 +14,18 @@ public class ExceptionHandleAdvice {
     @ExceptionHandler(InvalidArgumentsException.class)
     @ResponseBody
     public Result<?> handleInvalidArgumentsException(InvalidArgumentsException e) {
-        log.error(e.getMessage());
+        error(e);
         return Result.error(ResultEnum.INVALID_ARGUMENTS, e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public Result<?> handleException(Exception e) {
-        log.error(e.getMessage());
+        error(e);
         return Result.error(ResultEnum.ERROR);
+    }
+
+    private static void error(Exception e) {
+        log.error("{}: {}", e.getClass().getCanonicalName(), e.getMessage());
     }
 }

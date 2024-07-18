@@ -1,4 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.model.dto.request;
 
-public record UninstallRequest(String taskId) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UninstallRequest(@NotBlank String taskId) {
 }
