@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.domain.aggregator;
+package cn.edu.nju.ics.qtosplatform.domain.entity;
 
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import lombok.AllArgsConstructor;

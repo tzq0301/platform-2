@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.converter.impl;
 
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineOsEnum;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;

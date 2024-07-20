@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.assembler.impl;
 
 import cn.edu.nju.ics.qtosplatform.assembler.MachineAssembler;
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.dto.MachineDTO;
 import org.springframework.stereotype.Component;
 

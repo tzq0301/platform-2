@@ -3,7 +3,7 @@ package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.DeployTask;
+import cn.edu.nju.ics.qtosplatform.domain.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskStatus;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskPO;

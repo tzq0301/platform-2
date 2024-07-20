@@ -1,6 +1,6 @@
 package cn.edu.nju.ics.qtosplatform.domain.repository;
 
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.Project;
+import cn.edu.nju.ics.qtosplatform.domain.entity.Project;
 
 import java.util.List;
 

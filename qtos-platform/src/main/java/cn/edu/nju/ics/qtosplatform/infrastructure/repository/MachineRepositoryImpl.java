@@ -3,7 +3,7 @@ package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
 import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;

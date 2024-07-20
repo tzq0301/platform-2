@@ -1,7 +1,7 @@
 package cn.edu.nju.ics.qtosplatform.service.impl;
 
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.DeployTask;
-import cn.edu.nju.ics.qtosplatform.domain.aggregator.Machine;
+import cn.edu.nju.ics.qtosplatform.domain.entity.DeployTask;
+import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskId;
