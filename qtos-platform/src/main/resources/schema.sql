@@ -34,5 +34,6 @@ CREATE TABLE `deploy_task_dependency`
     `id`                    BIGINT   NOT NULL AUTO_INCREMENT,
     `source_deploy_task_id` CHAR(32) NOT NULL DEFAULT '',
     `target_deploy_task_id` CHAR(32) NOT NULL DEFAULT '' COMMENT '被依赖的 deploy_task',
+    UNIQUE KEY (`source_deploy_task_id`, `target_deploy_task_id`),
     PRIMARY KEY (`id`)
 );
