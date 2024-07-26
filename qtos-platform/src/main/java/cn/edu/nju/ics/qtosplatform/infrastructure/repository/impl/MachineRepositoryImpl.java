@@ -1,11 +1,11 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
+package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
 import cn.edu.nju.ics.qtosplatform.converter.MachineConverter;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
+import cn.edu.nju.ics.qtosplatform.infrastructure.repository.MachineRepository;
 import cn.edu.nju.ics.qtosplatform.model.po.MachinePO;
-import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package cn.edu.nju.ics.qtosplatform.domain.repository;
+package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
 
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.MachineId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;

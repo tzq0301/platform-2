@@ -1,13 +1,13 @@
-package cn.edu.nju.ics.qtosplatform.infrastructure.repository;
+package cn.edu.nju.ics.qtosplatform.infrastructure.repository.impl;
 
 import cn.edu.nju.ics.qtosplatform.converter.DeployTaskConverter;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskId;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.ProjectId;
 import cn.edu.nju.ics.qtosplatform.domain.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.domain.valueobject.DeployTaskStatus;
+import cn.edu.nju.ics.qtosplatform.infrastructure.repository.DeployTaskRepository;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskDependencyPO;
 import cn.edu.nju.ics.qtosplatform.model.po.DeployTaskPO;
-import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;

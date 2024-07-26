@@ -5,9 +5,9 @@ import cn.edu.nju.ics.qtosplatform.domain.entity.DeployTask;
 import cn.edu.nju.ics.qtosplatform.domain.entity.Machine;
 import cn.edu.nju.ics.qtosplatform.model.dto.ProjectDTO;
 import cn.edu.nju.ics.qtosplatform.model.dto.response.ProjectsResponse;
-import cn.edu.nju.ics.qtosplatform.domain.repository.DeployTaskRepository;
-import cn.edu.nju.ics.qtosplatform.domain.repository.MachineRepository;
-import cn.edu.nju.ics.qtosplatform.domain.repository.ProjectRepository;
+import cn.edu.nju.ics.qtosplatform.infrastructure.repository.DeployTaskRepository;
+import cn.edu.nju.ics.qtosplatform.infrastructure.repository.MachineRepository;
+import cn.edu.nju.ics.qtosplatform.infrastructure.repository.ProjectRepository;
 import cn.edu.nju.ics.qtosplatform.service.ProjectService;
 import org.springframework.stereotype.Service;
 
