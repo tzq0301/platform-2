@@ -9,6 +9,6 @@ import java.util.List;
 public record UploadRequest(@NotBlank String serviceName,
                             @NotNull Long projectId,
                             @NotNull Long machineId,
-                            @NotNull List<String> dependentTaskIds,
+                            List<String> dependentTaskIds,
                             @NotNull MultipartFile file) {
 }
