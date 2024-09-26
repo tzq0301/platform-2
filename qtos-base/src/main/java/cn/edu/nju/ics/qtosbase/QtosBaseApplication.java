@@ -1,13 +1,15 @@
 package cn.edu.nju.ics.qtosbase;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 @SpringBootApplication
 public class QtosBaseApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(QtosBaseApplication.class, args);
+        new SpringApplicationBuilder(QtosBaseApplication.class)
+                .headless(false)
+                .run(args);
     }
 
 }

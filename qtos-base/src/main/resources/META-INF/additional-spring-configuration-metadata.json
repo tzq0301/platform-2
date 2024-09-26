@@ -11,6 +11,10 @@
     {
       "name": "qtos.base.uninstall-script-candidates",
       "type": "java.lang.String"
+    },
+    {
+      "name": "qtos.base.ui",
+      "type": "java.lang.String"
     }
   ]
 }
