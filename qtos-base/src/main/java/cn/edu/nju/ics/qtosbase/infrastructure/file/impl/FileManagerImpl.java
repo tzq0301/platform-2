@@ -1,7 +1,6 @@
 package cn.edu.nju.ics.qtosbase.infrastructure.file.impl;
 
 import cn.edu.nju.ics.qtosbase.infrastructure.file.FileManager;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
